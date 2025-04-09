@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vet_app/services/firebase_service.dart';
 import 'package:vet_app/screens/menu_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,22 +24,53 @@ class _LoginScreenState extends State<LoginScreen> {
     String email = "${_phoneController.text.replaceAll(' ', '')}@example.com";
     String password = _passwordController.text;
 
+    print('Login attempt: email=$email');
+
     try {
       final userCredential = await FirebaseService.signInWithEmailPassword(email, password);
+      
+      print('Login result: ${userCredential != null ? "Success" : "Failed"}');
       
       setState(() {
         _isLoading = false;
       });
 
       if (userCredential != null) {
+        print('Login successful: navigating to MenuScreen');
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MenuScreen()),
         );
       } else {
+        print('Login failed: null userCredential');
         _showErrorDialog("Туура эмес номер же сыр сөз");
       }
+    } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException during login: ${e.code} - ${e.message}');
+      setState(() {
+        _isLoading = false;
+      });
+      
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = "Бул номер табылган жок";
+          break;
+        case 'wrong-password':
+          errorMessage = "Туура эмес сыр сөз";
+          break;
+        case 'invalid-email':
+          errorMessage = "Жараксыз электрондук почта форматы";
+          break;
+        case 'user-disabled':
+          errorMessage = "Бул аккаунт өчүрүлгөн";
+          break;
+        default:
+          errorMessage = "Кирүү учурунда катачылык: ${e.message}";
+      }
+      _showErrorDialog(errorMessage);
     } catch (e) {
+      print('Unexpected error during login: $e');
       setState(() {
         _isLoading = false;
       });

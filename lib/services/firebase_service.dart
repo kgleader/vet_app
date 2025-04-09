@@ -8,17 +8,34 @@ class FirebaseService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   static Future<void> initializeFirebase() async {
-    await Firebase.initializeApp();
+    try {
+      await Firebase.initializeApp();
+      print('Firebase initialized successfully');
+      
+      // Print current user if logged in
+      final currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        print('User already logged in: ${currentUser.email}');
+      } else {
+        print('No user currently logged in');
+      }
+    } catch (e) {
+      print('Error initializing Firebase: $e');
+    }
   }
 
   // Email/Password Sign Up
-  static Future<UserCredential?> signUpWithEmailPassword(String email, String password) async {
+  static Future<UserCredential> signUpWithEmailPassword(String email, String password) async {
     try {
-      // First check if the email is already in use
-      final methods = await _auth.fetchSignInMethodsForEmail(email);
-      if (methods.isNotEmpty) {
-        print('Email already in use: $email');
-        return null;
+      print('Starting Firebase registration with email: $email');
+      
+      // Check if email is valid
+      if (!email.contains('@')) {
+        print('Invalid email format: $email');
+        throw FirebaseAuthException(
+          code: 'invalid-email',
+          message: 'The email address is badly formatted.',
+        );
       }
       
       // Create the user with email and password
@@ -27,16 +44,17 @@ class FirebaseService {
         password: password,
       );
       
-      // Update the user profile with display name if needed
-      // await userCredential.user?.updateDisplayName(displayName);
-      
+      print('User created successfully with uid: ${userCredential.user?.uid}');
       return userCredential;
     } on FirebaseAuthException catch (e) {
       print('Firebase Auth Error during sign up: ${e.code} - ${e.message}');
-      return null;
+      rethrow; // Rethrow to handle in UI
     } catch (e) {
       print('Unexpected error during sign up: $e');
-      return null;
+      throw FirebaseAuthException(
+        code: 'unknown',
+        message: 'An unexpected error occurred: $e',
+      );
     }
   }
 
@@ -86,8 +104,20 @@ class FirebaseService {
 
   // Sign Out
   static Future<void> signOut() async {
-    await _googleSignIn.signOut();
-    await _auth.signOut();
+    try {
+      // Sign out from Google if it was used
+      if (await _googleSignIn.isSignedIn()) {
+        await _googleSignIn.signOut();
+        print('Google sign out successful');
+      }
+      
+      // Sign out from Firebase
+      await _auth.signOut();
+      print('User signed out successfully.');
+    } catch (e) {
+      print('Error signing out: $e');
+      throw e;
+    }
   }
 
   // Get Current User

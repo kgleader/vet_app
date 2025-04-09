@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:vet_app/screens/login_screen.dart';
+import 'package:vet_app/services/firebase_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Check if user is signed in
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final bool isUserSignedIn = currentUser != null;
+    
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(20),
@@ -60,6 +66,54 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // Add debug sign out button if user is signed in
+            if (isUserSignedIn)
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      print('Signing out current user: ${currentUser.email}');
+                      await FirebaseService.signOut();
+                      
+                      // Show a snackbar to confirm sign-out
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Колдонуучу чыгып кетти'),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: 'OK',
+                            textColor: Colors.white,
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                      
+                      // Force refresh the page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                      );
+                      
+                      print('Sign out successful');
+                    } catch (e) {
+                      print('Error signing out: $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Катталуу учурунда катачылык: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    minimumSize: Size(double.infinity, 40),
+                  ),
+                  child: Text('Чыгуу (Sign Out)', style: TextStyle(color: Colors.white)),
+                ),
+              ),
             Expanded(
               child: Image.asset(
                 'assets/cow.png',

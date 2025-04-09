@@ -44,41 +44,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    // Using phone as email for simplicity
-    String email = "${_phoneController.text.replaceAll(' ', '')}@example.com";
-    String password = _passwordController.text;
-
     try {
-      // Create user with email and password
-      final UserCredential? userCredential = await FirebaseService.signUpWithEmailPassword(email, password);
+      print('Starting registration process');
+      // Format phone number and create a valid email from it
+      String phone = _phoneController.text.trim();
+      // Remove any spaces or special characters
+      phone = phone.replaceAll(RegExp(r'[^\d]'), '');
       
-      if (userCredential != null && userCredential.user != null) {
-        // Update user profile with display name
-        try {
-          await userCredential.user!.updateDisplayName(_nameController.text);
-          await FirebaseService.updateUserProfile(
-            userId: userCredential.user!.uid, 
-            displayName: _nameController.text, 
-            phoneNumber: _phoneController.text
-          );
-          
-          // Successfully registered
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MenuScreen()),
-          );
-        } catch (profileError) {
-          print("Error updating profile: $profileError");
-          // Continue anyway as the user was created
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MenuScreen()),
-          );
-        }
-      } else {
-        _showErrorDialog("Катталуу учурунда катачылык");
+      // Create a valid email using the phone number
+      String email = "$phone@example.com";
+      String password = _passwordController.text;
+      
+      print('Attempting to register user with email: $email');
+
+      try {
+        // Create user with email and password
+        final UserCredential userCredential = await FirebaseService.signUpWithEmailPassword(email, password);
+        
+        print('Registration successful! User ID: ${userCredential.user!.uid}');
+        
+        // Update display name
+        await userCredential.user!.updateDisplayName(_nameController.text);
+        print('Display name updated successfully to: ${_nameController.text}');
+        
+        // Skip Firestore profile update as it's causing the type cast issue
+        // We'll only use Firebase Authentication for now
+        
+        print('Navigation to menu screen');
+        // Navigate to menu screen
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MenuScreen()),
+          (route) => false,
+        );
+      } catch (e) {
+        print('Error during Firebase Auth operation: $e');
+        throw e; // Re-throw to be caught by the outer try-catch
       }
+      
     } on FirebaseAuthException catch (e) {
+      print('FirebaseAuthException: ${e.code} - ${e.message}');
       String errorMessage;
       switch (e.code) {
         case 'email-already-in-use':
@@ -87,11 +92,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         case 'weak-password':
           errorMessage = "Өтө жөнөкөй сыр сөз. Күчтүүрөөк сыр сөз жазыңыз";
           break;
+        case 'invalid-email':
+          errorMessage = "Жараксыз телефон номери";
+          break;
+        case 'operation-not-allowed':
+          errorMessage = "Бул операцияга уруксат жок";
+          break;
         default:
           errorMessage = "Катталуу учурунда катачылык: ${e.message}";
       }
       _showErrorDialog(errorMessage);
     } catch (e) {
+      print('Unexpected error during registration: $e');
       _showErrorDialog("Катталуу учурунда катачылык: $e");
     } finally {
       setState(() {
@@ -160,18 +172,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Spacer(),
                   CircleAvatar(
-                    radius: 25,
+                    radius: 20,
                     backgroundColor: Color(0xFF4CAF50),
-                    child: Image.asset('assets/cow_icon.png', width: 35),
+                    child: Image.asset('assets/cow_icon.png', width: 28, height: 28),
                   ),
                 ],
               ),
               SizedBox(height: 25),
               Center(
                 child: Text(
-                  'Өтөйгөн жиберүү',
+                  'Өткөрүп жиберүү',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF4CAF50),
                   ),
@@ -194,10 +206,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextField(
                   controller: _nameController,
                   decoration: InputDecoration(
-                    hintText: 'Meerim Akmatova',
+                    hintText: 'Сиздин атыңыз',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
-                    prefixIcon: Icon(Icons.person, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    prefixIcon: Icon(Icons.person_outline, color: Colors.grey[400]),
                   ),
                 ),
               ),
@@ -218,10 +230,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextField(
                   controller: _phoneController,
                   decoration: InputDecoration(
-                    hintText: '+996 ••• •• ••',
+                    hintText: '996628262929',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
-                    prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    prefixIcon: Icon(Icons.phone_outlined, color: Colors.grey[400]),
                   ),
                   keyboardType: TextInputType.phone,
                 ),
@@ -246,7 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: '••••••••',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -254,15 +266,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _obscurePassword = !_obscurePassword;
                         });
                       },
-                      child: Icon(
-                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                        color: Colors.grey[400]
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(
+                          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
+                          color: Colors.grey[400]
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Text(
                 'Сыр сөздү ырастоо',
                 style: TextStyle(
@@ -282,7 +297,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: '••••••••',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -290,9 +305,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _obscureConfirmPassword = !_obscureConfirmPassword;
                         });
                       },
-                      child: Icon(
-                        _obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                        color: Colors.grey[400]
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(
+                          _obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
+                          color: Colors.grey[400]
+                        ),
                       ),
                     ),
                   ),
@@ -321,15 +339,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-              SizedBox(height: 20),
-              Center(
-                child: Text(
-                  'Катталып жатканыңыз менен Биз жөнүндө келишим',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                  textAlign: TextAlign.center,
-                ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Forgot password functionality
+                    },
+                    child: Text(
+                      'Сыр сөздү унуттуңузбу?',
+                      style: TextStyle(
+                        color: Color(0xFF4CAF50),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Аккаунтуңуз барбы? ',
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Text(
+                      'Кирүү',
+                      style: TextStyle(
+                        color: Color(0xFF4CAF50),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
