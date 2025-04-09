@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "207573665237",
+    "project_id": "vetapp-f8230",
+    "storage_bucket": "vetapp-f8230.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207573665237:android:5d9da5b5d23df723d0295c",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE7qS90fhr5AcHx_hR-VUD0ranoqhM0vM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
