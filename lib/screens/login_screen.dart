@@ -12,6 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   Future<void> _signInWithEmailAndPassword() async {
     setState(() {
@@ -92,16 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 50),
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+                    icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
                     onPressed: () => Navigator.pop(context),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
                   ),
                   Spacer(),
                   CircleAvatar(
@@ -111,44 +113,76 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 25),
               Center(
                 child: Text(
-                  'Өтөйгөн жиберүү',
+                  'Өткөрүп жиберүү',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF4CAF50),
                   ),
                 ),
               ),
               SizedBox(height: 30),
-              Text('Сиздин номериңиз'),
+              Text(
+                'Сиздин номериңиз',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
               SizedBox(height: 10),
-              TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  hintText: '+996 779270023',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                    hintText: '996627826292',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
                   ),
-                  prefixIcon: Icon(Icons.phone, color: Colors.grey),
+                  keyboardType: TextInputType.phone,
                 ),
               ),
               SizedBox(height: 20),
-              Text('Сыр сөз'),
+              Text(
+                'Сыр сөз',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
               SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: '••••••••••',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    hintText: '••••••••',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                      child: Icon(
+                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
+                        color: Colors.grey[400]
+                      ),
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.lock, color: Colors.grey),
                 ),
               ),
               Align(
@@ -157,13 +191,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {},
                   child: Text(
                     'Сыр сөздү унуттуңузбу?',
-                    style: TextStyle(color: Color(0xFF4CAF50)),
+                    style: TextStyle(
+                      color: Color(0xFF4CAF50),
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size(0, 30),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
               ),
               SizedBox(height: 20),
               _isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(child: CircularProgressIndicator(color: Color(0xFF4CAF50)))
                   : ElevatedButton(
                       onPressed: _signInWithEmailAndPassword,
                       style: ElevatedButton.styleFrom(
@@ -171,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         foregroundColor: Colors.white,
                         minimumSize: Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                         padding: EdgeInsets.symmetric(vertical: 15),
                       ),
@@ -184,32 +226,49 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Row(
                 children: [
-                  Expanded(child: Divider()),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey[350],
+                      thickness: 1,
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text('Же', style: TextStyle(color: Colors.grey)),
+                    child: Text(
+                      'Же', 
+                      style: TextStyle(color: Colors.grey[500]),
+                    ),
                   ),
-                  Expanded(child: Divider()),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey[350],
+                      thickness: 1,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: _signInWithGoogle,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/google_icon.png', height: 24),
-                    SizedBox(width: 10),
-                    Text('Google', style: TextStyle(color: Colors.black87)),
-                  ],
-                ),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              SizedBox(height: 30),
+              Center(
+                child: OutlinedButton(
+                  onPressed: _signInWithGoogle,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/google_icon.png', height: 24),
+                      SizedBox(width: 10),
+                      Text('Google', style: TextStyle(color: Colors.black87)),
+                    ],
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    side: BorderSide(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                 ),
               ),
@@ -217,23 +276,43 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Аккаунтуңуз жокпу?'),
-                  TextButton(
-                    onPressed: () {
+                  Flexible(
+                    child: Text(
+                      'Аккаунтуңуз жокпу? Ушул ',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterScreen()),
                       );
                     },
-                    child: Text('Катталуу', style: TextStyle(color: Color(0xFF4CAF50))),
+                    child: Text(
+                      'жерден',
+                      style: TextStyle(
+                        color: Color(0xFF4CAF50),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      ' катталыңыз',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Center(
                 child: Text(
-                  '© Колдонуучу келишим жана шарттары',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  '© МаралАкгүл.Баардык укуктар корголгон',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                 ),
               ),
             ],

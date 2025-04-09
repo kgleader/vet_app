@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -92,5 +93,25 @@ class FirebaseService {
   // Get Current User
   static User? getCurrentUser() {
     return _auth.currentUser;
+  }
+
+  // Update User Profile
+  static Future<bool> updateUserProfile({
+    required String userId, 
+    required String displayName, 
+    required String phoneNumber
+  }) async {
+    try {
+      // Store additional user data in Firestore
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'displayName': displayName,
+        'phoneNumber': phoneNumber,
+        'createdAt': DateTime.now(),
+      });
+      return true;
+    } catch (e) {
+      print('Error updating user profile: $e');
+      return false;
+    }
   }
 }
