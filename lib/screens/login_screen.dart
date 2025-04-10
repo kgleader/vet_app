@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vet_app/screens/menu_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
 import 'package:vet_app/screens/forgot_password_screen.dart';
+
+// Import the global auth flag
+import 'package:vet_app/main.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,12 +24,12 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    // Temporary solution to bypass Firebase login issues
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
       
-      print('Bypassing Firebase login for testing');
+      print('Mock login successful');
+      isAuthenticated = true;
       
       // Navigate to menu screen
       Navigator.pushReplacement(
@@ -34,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => MenuScreen()),
       );
     } catch (e) {
-      print('Error during login bypass: $e');
+      print('Error during login: $e');
       _showErrorDialog("Кирүү учурунда катачылык: $e");
     } finally {
       setState(() {
@@ -48,12 +51,12 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    // Temporary solution to bypass Firebase Google login issues
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
       
-      print('Bypassing Google sign-in for testing');
+      print('Mock Google sign-in successful');
+      isAuthenticated = true;
       
       // Navigate to menu screen
       Navigator.pushReplacement(
@@ -61,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => MenuScreen()),
       );
     } catch (e) {
-      print('Error during Google sign-in bypass: $e');
+      print('Error during Google sign-in: $e');
       setState(() {
         _isLoading = false;
       });
@@ -99,18 +102,27 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
+                    icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50), size: 20),
                     onPressed: () => Navigator.pop(context),
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
+                    padding: EdgeInsets.only(left: 5),
                   ),
-                  Spacer(),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Color(0xFF4CAF50),
-                    child: Image.asset('assets/cow_icon.png', width: 35),
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFF4CAF50),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'assets/cow_icon.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -136,13 +148,14 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.3)),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: TextField(
                   controller: _phoneController,
                   decoration: InputDecoration(
                     hintText: '996627826292',
+                    hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 15),
                     prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
@@ -161,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.3)),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: TextField(
@@ -171,16 +184,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: '••••••••',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 15),
-                    prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 10.0),
+                      child: Icon(Icons.lock_outline, color: Colors.grey[400], size: 20),
+                    ),
+                    prefixIconConstraints: BoxConstraints(minWidth: 45, minHeight: 45),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
                           _obscurePassword = !_obscurePassword;
                         });
                       },
-                      child: Icon(
-                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                        color: Colors.grey[400]
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Icon(
+                          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
+                          color: Colors.grey[400],
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -199,7 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Сыр сөздү унуттуңузбу?',
                     style: TextStyle(
                       color: Color(0xFF4CAF50),
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
                     ),
                   ),
                   style: TextButton.styleFrom(
@@ -216,10 +238,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF4CAF50),
                         foregroundColor: Colors.white,
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: Size(double.infinity, 46),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(25),
                         ),
+                        elevation: 0,
                         padding: EdgeInsets.symmetric(vertical: 15),
                       ),
                       child: Text(
@@ -263,17 +286,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/google_icon.png', height: 24),
-                      SizedBox(width: 10),
-                      Text('Google', style: TextStyle(color: Colors.black87)),
+                      Image.asset('assets/google_icon.png', height: 20),
+                      SizedBox(width: 8),
+                      Text('Google', style: TextStyle(color: Colors.black87, fontSize: 14)),
                     ],
                   ),
                   style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                    side: BorderSide(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    side: BorderSide(color: Colors.grey[300]!, width: 1),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(20),
                     ),
+                    backgroundColor: Colors.white,
                   ),
                 ),
               ),
@@ -281,12 +305,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
-                    child: Text(
-                      'Аккаунтуңуз жокпу? Ушул ',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Text(
+                    'Аккаунтуңуз жокпу? ',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -299,17 +320,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       'жерден',
                       style: TextStyle(
                         color: Color(0xFF4CAF50),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: Text(
-                      ' катталыңыз',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Text(
+                    ' каттaлыңыз',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                   ),
                 ],
               ),

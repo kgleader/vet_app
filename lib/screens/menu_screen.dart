@@ -169,9 +169,9 @@ class MenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 70,
-              height: 70,
-              padding: EdgeInsets.all(8),
+              width: 60,
+              height: 60,
+              padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -179,8 +179,6 @@ class MenuScreen extends StatelessWidget {
               child: Image.asset(
                 iconPath,
                 color: Color(0xFF4CAF50),
-                width: 54,
-                height: 54,
                 fit: BoxFit.contain,
               ),
             ),
@@ -192,7 +190,7 @@ class MenuScreen extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white, 
                   fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

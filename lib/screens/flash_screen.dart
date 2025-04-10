@@ -99,10 +99,14 @@ class _FlashScreenState extends State<FlashScreen> {
               ),
               Spacer(),
               // Larger cow image at bottom
-              Image.asset(
-                'assets/cow.png',
-                height: 250,
-                fit: BoxFit.contain,
+              Container(
+                height: 300,
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/cow.png',
+                  height: 280,
+                  fit: BoxFit.contain,
+                ),
               ),
             ],
           ),
