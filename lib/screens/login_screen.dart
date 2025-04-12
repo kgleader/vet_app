@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vet_app/screens/menu_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
+import 'package:vet_app/screens/forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -188,7 +189,12 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                    );
+                  },
                   child: Text(
                     'Сыр сөздү унуттуңузбу?',
                     style: TextStyle(
@@ -199,7 +205,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: Size(0, 30),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
               ),
