@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vet_app/screens/menu_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
 import 'package:vet_app/screens/forgot_password_screen.dart';
-
-// Import the global auth flag
-import 'package:vet_app/main.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,12 +21,12 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
+    // Temporary solution to bypass Firebase login issues
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
       
-      print('Mock login successful');
-      isAuthenticated = true;
+      print('Bypassing Firebase login for testing');
       
       // Navigate to menu screen
       Navigator.pushReplacement(
@@ -37,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => MenuScreen()),
       );
     } catch (e) {
-      print('Error during login: $e');
+      print('Error during login bypass: $e');
       _showErrorDialog("Кирүү учурунда катачылык: $e");
     } finally {
       setState(() {
@@ -51,12 +48,12 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
+    // Temporary solution to bypass Firebase Google login issues
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
       
-      print('Mock Google sign-in successful');
-      isAuthenticated = true;
+      print('Bypassing Google sign-in for testing');
       
       // Navigate to menu screen
       Navigator.pushReplacement(
@@ -64,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => MenuScreen()),
       );
     } catch (e) {
-      print('Error during Google sign-in: $e');
+      print('Error during Google sign-in bypass: $e');
       setState(() {
         _isLoading = false;
       });

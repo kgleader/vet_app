@@ -162,27 +162,22 @@ class MenuScreen extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF4CAF50),
+          color: Color(0xFF00A651), 
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 60,
-              height: 60,
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
               child: Image.asset(
                 iconPath,
-                color: Color(0xFF4CAF50),
-                fit: BoxFit.contain,
+                width: 40,
+                height: 40,
+                color: Colors.white, 
               ),
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(

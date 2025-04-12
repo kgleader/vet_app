@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vet_app/services/firestore_service.dart';
 
 class AboutUsScreen extends StatefulWidget {
+  const AboutUsScreen({super.key});
+
   @override
   _AboutUsScreenState createState() => _AboutUsScreenState();
 }
@@ -45,78 +46,80 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         ),
         title: Text('Биз жөнүндө', style: TextStyle(color: Colors.black)),
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (_aboutData != null && _aboutData!['imageUrl'] != null)
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                          image: NetworkImage(_aboutData!['imageUrl']),
-                          fit: BoxFit.cover,
+      body:
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (_aboutData != null && _aboutData!['imageUrl'] != null)
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: NetworkImage(_aboutData!['imageUrl']),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    else
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Icon(Icons.image, size: 50, color: Colors.grey),
+                      ),
+                    SizedBox(height: 20),
+                    Text(
+                      _aboutData != null && _aboutData!['title'] != null
+                          ? _aboutData!['title']
+                          : 'Биз жөнүндө',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      _aboutData != null && _aboutData!['description'] != null
+                          ? _aboutData!['description']
+                          : 'Бул бөлүмдө маалымат жакында кошулат. Биздин ветеринардык клиника жөнүндө жана кызматтарыбыз жөнүндө маалымат.',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 20),
+                    if (_aboutData != null &&
+                        _aboutData!['contactInfo'] != null)
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.green[50],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Байланыш маалыматы',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(_aboutData!['contactInfo']),
+                          ],
                         ),
                       ),
-                    )
-                  else
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Icon(Icons.image, size: 50, color: Colors.grey),
-                    ),
-                  SizedBox(height: 20),
-                  Text(
-                    _aboutData != null && _aboutData!['title'] != null
-                        ? _aboutData!['title']
-                        : 'Биз жөнүндө',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    _aboutData != null && _aboutData!['description'] != null
-                        ? _aboutData!['description']
-                        : 'Бул бөлүмдө маалымат жакында кошулат. Биздин ветеринардык клиника жөнүндө жана кызматтарыбыз жөнүндө маалымат.',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 20),
-                  if (_aboutData != null && _aboutData!['contactInfo'] != null)
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.green[50],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Байланыш маалыматы',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(_aboutData!['contactInfo']),
-                        ],
-                      ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
     );
   }
 }

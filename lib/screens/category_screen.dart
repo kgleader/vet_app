@@ -6,10 +6,10 @@ class CategoryScreen extends StatelessWidget {
   final String iconPath;
 
   const CategoryScreen({
-    Key? key,
+    super.key,
     required this.title,
     required this.iconPath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,7 @@ class CategoryScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          title,
-          style: TextStyle(color: Colors.black, fontSize: 20),
-        ),
+        title: Text(title, style: TextStyle(color: Colors.black, fontSize: 20)),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -46,7 +43,10 @@ class CategoryScreen extends StatelessWidget {
               width: 80,
               child: SvgPicture.asset(
                 iconPath,
-                colorFilter: ColorFilter.mode(Color(0xFF4CAF50), BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                  Color(0xFF4CAF50),
+                  BlendMode.srcIn,
+                ),
               ),
             ),
             SizedBox(height: 20),
