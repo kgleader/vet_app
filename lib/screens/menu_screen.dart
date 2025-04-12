@@ -84,10 +84,21 @@ class MenuScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundColor: Color(0xFF4CAF50),
-              radius: 18,
-              child: Image.asset('assets/cow_icon.png', width: 24, height: 24),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF4CAF50),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Image.asset(
+                  'assets/cow_icon.png',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
             ),
           ),
         ],
@@ -100,12 +111,12 @@ class MenuScreen extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: GridView.builder(
                   physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 1.0,
+                    childAspectRatio: 0.95,
                   ),
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
@@ -158,27 +169,35 @@ class MenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 48,
-              height: 48,
-              padding: EdgeInsets.all(12),
+              width: 70,
+              height: 70,
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Image.asset(
                 iconPath,
                 color: Color(0xFF4CAF50),
+                width: 54,
+                height: 54,
+                fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white, 
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
+            SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white, 
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),

@@ -28,41 +28,51 @@ class _FlashScreenState extends State<FlashScreen> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Color(0xFF4CAF50),
-                  child: Image.asset('assets/cow_icon.png', width: 30, height: 30),
-                ),
-              ),
-              Spacer(),
+              SizedBox(height: 20),
+              // Centered logo at top
               Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Кош келдиңиз!',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF4CAF50),
-                      ),
+                child: Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFF4CAF50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Image.asset(
+                      'assets/cow_icon.png',
+                      fit: BoxFit.contain,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Мал жандыгыңызды асыроону биз менен баштаңыз',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              Spacer(),
+              SizedBox(height: 30),
+              // Text
+              Text(
+                'Кош келдиңиз!',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF4CAF50),
+                ),
+              ),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Text(
+                  'Мал жандыгыңызды асыроону биз менен баштаңыз',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    height: 1.4,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              // Button
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
@@ -73,25 +83,25 @@ class _FlashScreenState extends State<FlashScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF4CAF50),
                   foregroundColor: Colors.white,
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: Size(double.infinity, 54),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
                 child: Text(
-                  'Баштоо', 
+                  'Баштоо',
                   style: TextStyle(
-                    fontSize: 18, 
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              Spacer(),
+              // Larger cow image at bottom
               Image.asset(
                 'assets/cow.png',
-                height: 200,
+                height: 250,
                 fit: BoxFit.contain,
               ),
             ],
