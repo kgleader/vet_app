@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vet_app/screens/welcom_screen.dart';
+import 'package:vet_app/screens/welcome_screen.dart'; // Ensure this path is correct
 
 class FlashScreen extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class _FlashScreenState extends State<FlashScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Image.asset(
-                      'assets/cow_icon.png',
+                      'assets/logo.png', // Ensure this matches your logo file path
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -103,7 +103,7 @@ class _FlashScreenState extends State<FlashScreen> {
                 height: 300,
                 alignment: Alignment.center,
                 child: Image.asset(
-                  'assets/cow.png',
+                  'assets/image.png',
                   height: 280,
                   fit: BoxFit.contain,
                 ),

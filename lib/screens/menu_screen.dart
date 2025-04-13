@@ -54,7 +54,7 @@ class MenuScreen extends StatelessWidget {
     {'title': 'Биз жөнүндө', 'icon': 'assets/icons/info.png'},
     {'title': 'Тоют', 'icon': 'assets/icons/grass.png'},
     {'title': 'Уруктандыруу', 'icon': 'assets/icons/male.png'},
-    {'title': 'Оору', 'icon': 'assets/icons/vaccine.png'},
+    {'title': 'Оору', 'icon': 'assets/icons/vaccines.png'},
     {'title': 'Бодо мал', 'icon': 'assets/icons/cow.png'},
     {'title': 'Кой эчкилер', 'icon': 'assets/icons/goat.png'},
     {'title': 'Жылкылар', 'icon': 'assets/icons/horse.png'},
@@ -73,7 +73,7 @@ class MenuScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Меню', 
+          'Меню',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -121,8 +121,8 @@ class MenuScreen extends StatelessWidget {
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     return _buildMenuItem(
-                      context, 
-                      categories[index]['title']!, 
+                      context,
+                      categories[index]['title']!,
                       categories[index]['icon']!,
                     );
                   },
@@ -139,7 +139,6 @@ class MenuScreen extends StatelessWidget {
   Widget _buildMenuItem(BuildContext context, String title, String iconPath) {
     return GestureDetector(
       onTap: () {
-        // Navigate to the appropriate screen based on the title
         if (title == 'Биз жөнүндө') {
           Navigator.push(
             context,
@@ -151,7 +150,6 @@ class MenuScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => ToyutScreen()),
           );
         } else {
-          // For other categories, use the generic CategoryPage
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -162,19 +160,19 @@ class MenuScreen extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF00A651), 
+          color: Color(0xFF00A651),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0),
+            Container(
+              width: 48,
+              height: 48,
+              margin: EdgeInsets.only(top: 16),
               child: Image.asset(
                 iconPath,
-                width: 40,
-                height: 40,
-                color: Colors.white, 
+                fit: BoxFit.contain,
               ),
             ),
             SizedBox(height: 10),
@@ -183,7 +181,7 @@ class MenuScreen extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: Colors.white, 
+                  color: Colors.white,
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                 ),

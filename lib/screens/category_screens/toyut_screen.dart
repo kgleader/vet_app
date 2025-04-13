@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ToyutScreen extends StatelessWidget {
   @override
@@ -136,11 +135,11 @@ class ToyutScreen extends StatelessWidget {
             color: Color(0xFF4CAF50).withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: SvgPicture.asset(
+          child: Image.asset(
             item['image']!,
             width: 24,
             height: 24,
-            colorFilter: ColorFilter.mode(Color(0xFF4CAF50), BlendMode.srcIn),
+            color: Color(0xFF4CAF50),
           ),
         ),
         title: Text(
