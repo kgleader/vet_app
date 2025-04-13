@@ -4,6 +4,8 @@ import 'package:vet_app/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Check if user is signed in

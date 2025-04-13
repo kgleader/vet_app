@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';  // Добавляем импорт
+
 class NewsModel {
   final String id;
   final String title;

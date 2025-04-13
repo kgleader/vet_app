@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:vet_app/screens/welcom_screen.dart';
+import 'package:vet_app/screens/welcome_screen.dart';
 import 'package:vet_app/screens/flash_screen.dart';
 import 'package:vet_app/screens/login_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
@@ -15,8 +15,6 @@ import 'package:vet_app/screens/category_screens/toyut_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Load environment variables from .env file
   await dotenv.load();
 
   try {

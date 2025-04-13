@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class VeterinarianScreen extends StatefulWidget {
+  const VeterinarianScreen({super.key});
+
   @override
   _VeterinarianScreenState createState() => _VeterinarianScreenState();
 }
@@ -128,7 +130,7 @@ class _VeterinarianScreenState extends State<VeterinarianScreen> {
 class VetDetailScreen extends StatefulWidget {
   final Map<String, dynamic> vet;
 
-  VetDetailScreen({required this.vet});
+  const VetDetailScreen({super.key, required this.vet});
 
   @override
   _VetDetailScreenState createState() => _VetDetailScreenState();
@@ -143,8 +145,8 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
 
   Future<void> _pickImage() async {
     try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
       
       if (image != null) {
         setState(() {

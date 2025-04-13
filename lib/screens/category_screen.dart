@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryScreen extends StatelessWidget {
   final String title;
@@ -41,12 +40,9 @@ class CategoryScreen extends StatelessWidget {
             SizedBox(
               height: 80,
               width: 80,
-              child: SvgPicture.asset(
+              child: Image.asset(
                 iconPath,
-                colorFilter: ColorFilter.mode(
-                  Color(0xFF4CAF50),
-                  BlendMode.srcIn,
-                ),
+                color: Color(0xFF4CAF50),
               ),
             ),
             SizedBox(height: 20),

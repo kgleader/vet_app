@@ -10,6 +10,8 @@ class ProfileScreen extends StatelessWidget {
     'location': 'Бишкек',
   };
 
+  ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

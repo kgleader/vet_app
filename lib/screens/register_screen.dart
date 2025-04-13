@@ -6,6 +6,8 @@ import 'package:vet_app/screens/menu_screen.dart';
 import 'package:vet_app/screens/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -104,11 +106,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         } catch (authError) {
           print('Firebase Auth error: $authError');
           // Re-throw to be caught by the outer try-catch
-          throw authError;
+          rethrow;
         }
       } catch (e) {
         print('Error during Firebase Auth operation: $e');
-        throw e; // Re-throw to be caught by the outer try-catch
+        rethrow; // Re-throw to be caught by the outer try-catch
       }
       
     } on FirebaseAuthException catch (e) {
@@ -476,6 +478,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       (route) => false,
                     );
                   },
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    side: BorderSide(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -484,13 +493,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(width: 10),
                       Text('Google', style: TextStyle(color: Colors.black87)),
                     ],
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                    side: BorderSide(color: Color(0xFF4CAF50).withOpacity(0.5)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
                   ),
                 ),
               ),

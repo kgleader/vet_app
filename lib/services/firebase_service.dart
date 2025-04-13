@@ -116,7 +116,7 @@ class FirebaseService {
       print('User signed out successfully.');
     } catch (e) {
       print('Error signing out: $e');
-      throw e;
+      rethrow;
     }
   }
 

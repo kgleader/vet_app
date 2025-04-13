@@ -5,7 +5,7 @@ import 'package:vet_app/screens/change_password_screen.dart';
 class ForgotPasswordVerificationScreen extends StatefulWidget {
   final String phoneNumber;
 
-  ForgotPasswordVerificationScreen({required this.phoneNumber});
+  const ForgotPasswordVerificationScreen({super.key, required this.phoneNumber});
 
   @override
   _ForgotPasswordVerificationScreenState createState() =>

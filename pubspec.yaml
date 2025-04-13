@@ -62,9 +62,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/
-    - assets/
-    - .env
+  - assets/icons/
+  - assets/
+  - .env
 
 # To add assets to your application, add an assets section, like this:
 # assets:

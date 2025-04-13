@@ -7,7 +7,7 @@ class CategoryPage extends StatelessWidget {
   final String title;
   final String iconPath;
 
-  CategoryPage({required this.title, required this.iconPath});
+  const CategoryPage({super.key, required this.title, required this.iconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,28 @@ class CategoryPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(title, style: TextStyle(color: Colors.black)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF4CAF50),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Image.asset(
+                  'assets/cow_icon.png', // Ensure path is correct
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -51,15 +70,17 @@ class CategoryPage extends StatelessWidget {
 
 class MenuScreen extends StatelessWidget {
   final List<Map<String, String>> categories = [
-    {'title': 'Биз жөнүндө', 'icon': 'assets/icons/info.png'},
-    {'title': 'Тоют', 'icon': 'assets/icons/grass.png'},
-    {'title': 'Уруктандыруу', 'icon': 'assets/icons/male.png'},
-    {'title': 'Оору', 'icon': 'assets/icons/vaccines.png'},
-    {'title': 'Бодо мал', 'icon': 'assets/icons/cow.png'},
-    {'title': 'Кой эчкилер', 'icon': 'assets/icons/goat.png'},
-    {'title': 'Жылкылар', 'icon': 'assets/icons/horse.png'},
-    {'title': 'Тоок', 'icon': 'assets/icons/chicken.png'},
-  ];
+  {'title': 'Биз жөнүндө', 'icon': 'assets/info.png'},
+  {'title': 'Тоют', 'icon': 'assets/grass.png'},
+  {'title': 'Уруктандыруу', 'icon': 'assets/male.png'},
+  {'title': 'Оору', 'icon': 'assets/vaccines.png'},
+  {'title': 'Бодо мал', 'icon': 'assets/cow.png'},
+  {'title': 'Кой эчкилер', 'icon': 'assets/goat.png'},
+  {'title': 'Жылкылар', 'icon': 'assets/horse.png'},
+  {'title': 'Тоок', 'icon': 'assets/chicken.png'},
+];
+
+  MenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +135,9 @@ class MenuScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 0.95,
+                    crossAxisSpacing: 30,
+                    mainAxisSpacing: 30,  
+                    childAspectRatio: 0.9,
                   ),
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
@@ -159,6 +180,8 @@ class MenuScreen extends StatelessWidget {
         }
       },
       child: Container(
+        width: 135,
+        height: 135,
         decoration: BoxDecoration(
           color: Color(0xFF00A651),
           borderRadius: BorderRadius.circular(16),
@@ -167,9 +190,9 @@ class MenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 48,
-              height: 48,
-              margin: EdgeInsets.only(top: 16),
+              width: 60,
+              height: 60,
+              margin: EdgeInsets.only(top: 12),
               child: Image.asset(
                 iconPath,
                 fit: BoxFit.contain,
@@ -183,7 +206,7 @@ class MenuScreen extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -198,7 +221,7 @@ class MenuScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      height: 80,
+      height: 60,
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Color(0xFF4CAF50),
@@ -216,7 +239,7 @@ class MenuScreen extends StatelessWidget {
             child: Icon(
               Icons.home_outlined,
               color: Color(0xFF4CAF50),
-              size: 26,
+              size: 32,
             ),
           ),
           GestureDetector(
@@ -226,7 +249,7 @@ class MenuScreen extends StatelessWidget {
             child: Icon(
               Icons.article_outlined,
               color: Colors.white,
-              size: 26,
+              size: 32,
             ),
           ),
           GestureDetector(
@@ -239,7 +262,7 @@ class MenuScreen extends StatelessWidget {
             child: Icon(
               Icons.person_outline,
               color: Colors.white,
-              size: 26,
+              size: 32,
             ),
           ),
         ],

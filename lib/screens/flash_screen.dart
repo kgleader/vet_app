@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:vet_app/screens/welcome_screen.dart'; // Ensure this path is correct
+import 'package:vet_app/screens/welcome_screen.dart';
 
 class FlashScreen extends StatefulWidget {
+  const FlashScreen({super.key});
+
   @override
   _FlashScreenState createState() => _FlashScreenState();
 }
 
 class _FlashScreenState extends State<FlashScreen> {
-  @override
+  @override  
   void initState() {
     super.initState();
-    // Navigate to welcome screen after 2 seconds
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => WelcomeScreen()),
@@ -30,26 +31,24 @@ class _FlashScreenState extends State<FlashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              // Centered logo at top
               Center(
                 child: Container(
-                  width: 90,
-                  height: 90,
+                  width: 60,
+                  height: 60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFF4CAF50),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Image.asset(
-                      'assets/logo.png', // Ensure this matches your logo file path
+                      'assets/cow_icon.png',
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ),
               SizedBox(height: 30),
-              // Text
               Text(
                 'Кош келдиңиз!',
                 style: TextStyle(
@@ -72,7 +71,6 @@ class _FlashScreenState extends State<FlashScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              // Button
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
@@ -98,12 +96,11 @@ class _FlashScreenState extends State<FlashScreen> {
                 ),
               ),
               Spacer(),
-              // Larger cow image at bottom
               Container(
                 height: 300,
                 alignment: Alignment.center,
                 child: Image.asset(
-                  'assets/image.png',
+                  'assets/main_icon.png',
                   height: 280,
                   fit: BoxFit.contain,
                 ),

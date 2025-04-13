@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vet_app/blocs/news_bloc.dart';
 
 class NewsScreen extends StatefulWidget {
+  const NewsScreen({super.key});
+
   @override
   _NewsScreenState createState() => _NewsScreenState();
 }

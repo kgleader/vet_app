@@ -6,6 +6,8 @@ import 'package:vet_app/screens/register_screen.dart';
 import 'package:vet_app/screens/forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -213,6 +215,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
                     );
                   },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size(0, 30),
+                  ),
                   child: Text(
                     'Сыр сөздү унуттуңузбу?',
                     style: TextStyle(
@@ -220,10 +226,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
                     ),
-                  ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size(0, 30),
                   ),
                 ),
               ),
@@ -279,6 +281,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: OutlinedButton(
                   onPressed: _signInWithGoogle,
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    side: BorderSide(color: Colors.grey[300]!, width: 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Colors.white,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -287,14 +297,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(width: 8),
                       Text('Google', style: TextStyle(color: Colors.black87, fontSize: 14)),
                     ],
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                    side: BorderSide(color: Colors.grey[300]!, width: 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    backgroundColor: Colors.white,
                   ),
                 ),
               ),

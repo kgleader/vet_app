@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfileEditScreen extends StatefulWidget {
   final Map<String, String> userData;
 
-  ProfileEditScreen({required this.userData});
+  const ProfileEditScreen({super.key, required this.userData});
 
   @override
   _ProfileEditScreenState createState() => _ProfileEditScreenState();

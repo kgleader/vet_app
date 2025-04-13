@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ToyutScreen extends StatelessWidget {
+  const ToyutScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +118,7 @@ class ToyutScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        ...items.map((item) => _buildFeedItem(context, item)).toList(),
+        ...items.map((item) => _buildFeedItem(context, item)),
       ],
     );
   }
