@@ -37,13 +37,20 @@ class _FlashScreenState extends State<FlashScreen> {
                   height: 60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF4CAF50),
+                    border: Border.all(color: Colors.red, width: 1), // Add border
+                    color: Colors.white,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Image.asset(
-                      'assets/cow_icon.png',
-                      fit: BoxFit.contain,
+                    child:ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Color(0xFF4CAF50),
+                        BlendMode.srcATop,
+                      ),
+                      child: Image.asset(
+                        'assets/cow_icon.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
