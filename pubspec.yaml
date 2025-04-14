@@ -62,8 +62,17 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-  - assets/icons/
   - assets/
+  - assets/main_icon.png
+  - assets/cow.png
+  - assets/goat.png
+  - assets/horse.png
+  - assets/chicken.png
+  - assets/info.png
+  - assets/grass.png
+  - assets/male.png
+  - assets/vaccines.png
+  - assets/cow_icon.png
   - .env
 
 # To add assets to your application, add an assets section, like this:

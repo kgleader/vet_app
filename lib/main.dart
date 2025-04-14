@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:vet_app/screens/welcome_screen.dart';
 import 'package:vet_app/screens/flash_screen.dart';
 import 'package:vet_app/screens/login_screen.dart';
 import 'package:vet_app/screens/register_screen.dart';
@@ -82,7 +81,6 @@ class VetMobileApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => FlashScreen(),
-        '/welcome': (context) => WelcomeScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/menu': (context) => MenuScreen(),

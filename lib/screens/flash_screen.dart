@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vet_app/screens/welcome_screen.dart';
+import 'package:vet_app/screens/login_screen.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -12,12 +12,7 @@ class _FlashScreenState extends State<FlashScreen> {
   @override  
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-      );
-    });
+    // Удалено автоматическое перенаправление по таймеру
   }
 
   @override
@@ -32,26 +27,14 @@ class _FlashScreenState extends State<FlashScreen> {
             children: [
               SizedBox(height: 20),
               Center(
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.red, width: 1), // Add border
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Color(0xFF4CAF50),
+                  child: Image.asset(
+                    'assets/cow_icon.png',
+                    width: 30,
+                    height: 30,
                     color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child:ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        Color(0xFF4CAF50),
-                        BlendMode.srcATop,
-                      ),
-                      child: Image.asset(
-                        'assets/cow_icon.png',
-                        fit: BoxFit.contain,
-                      ),
-                    ),
                   ),
                 ),
               ),
@@ -82,7 +65,7 @@ class _FlashScreenState extends State<FlashScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -104,14 +87,21 @@ class _FlashScreenState extends State<FlashScreen> {
               ),
               Spacer(),
               Container(
-                height: 300,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/main_icon.png',
-                  height: 280,
-                  fit: BoxFit.contain,
+                width: 250,
+                height: 170,
+                decoration: BoxDecoration(
+                  color: Color(0xFF4CAF50),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/cow.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
