@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vet_app/screens/login_screen.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -26,15 +25,15 @@ class _FlashScreenState extends State<FlashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Center(
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Color(0xFF4CAF50),
+              // Изменяем выравнивание логотипа
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30),
                   child: Image.asset(
                     'assets/cow_icon.png',
-                    width: 30,
-                    height: 30,
-                    color: Colors.white,
+                    width: 55.34,
+                    height: 55,
                   ),
                 ),
               ),
@@ -63,10 +62,7 @@ class _FlashScreenState extends State<FlashScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                  Navigator.pushReplacementNamed(context, '/login');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF4CAF50),
@@ -86,19 +82,23 @@ class _FlashScreenState extends State<FlashScreen> {
                 ),
               ),
               Spacer(),
-              Container(
-                width: 250,
-                height: 170,
-                decoration: BoxDecoration(
-                  color: Color(0xFF4CAF50),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    'assets/cow.png',
-                    fit: BoxFit.cover,
-                  ),
+              SizedBox(
+                width: double.infinity, // Полная ширина экрана
+                height: 200, // Меньшая высота контейнера
+                child: Stack(
+                  clipBehavior: Clip.none, // Разрешаем выход за пределы Stack
+                  children: [
+                    Positioned(
+                      bottom: -30, // Немного сдвигаем вниз
+                      left: -51, // Сдвигаем влево как на макете
+                      child: Image.asset(
+                        'assets/main_icon.png',
+                        width: 462,
+                        height: 431,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),

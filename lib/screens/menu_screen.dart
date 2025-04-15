@@ -18,28 +18,9 @@ class CategoryPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFF4CAF50),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  'assets/cow_icon.png', // Ensure path is correct
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-          ),
-        ],
+        title: Text(title, style: TextStyle(color: Colors.black)),
       ),
       body: Center(
         child: Column(
@@ -70,15 +51,15 @@ class CategoryPage extends StatelessWidget {
 
 class MenuScreen extends StatelessWidget {
   final List<Map<String, String>> categories = [
-  {'title': 'Биз жөнүндө', 'icon': 'assets/info.png'},
-  {'title': 'Тоют', 'icon': 'assets/grass.png'},
-  {'title': 'Уруктандыруу', 'icon': 'assets/male.png'},
-  {'title': 'Оору', 'icon': 'assets/vaccines.png'},
-  {'title': 'Бодо мал', 'icon': 'assets/cow.png'},
-  {'title': 'Кой эчкилер', 'icon': 'assets/goat.png'},
-  {'title': 'Жылкылар', 'icon': 'assets/horse.png'},
-  {'title': 'Тоок', 'icon': 'assets/chicken.png'},
-];
+    {'title': 'Биз жөнүндө', 'icon': 'assets/icons/info.png'},
+    {'title': 'Тоют', 'icon': 'assets/icons/grass.png'},
+    {'title': 'Уруктандыруу', 'icon': 'assets/icons/male.png'},
+    {'title': 'Оору', 'icon': 'assets/icons/vaccine.png'},
+    {'title': 'Бодо мал', 'icon': 'assets/icons/cow.png'},
+    {'title': 'Кой эчкилер', 'icon': 'assets/icons/goat.png'},
+    {'title': 'Жылкылар', 'icon': 'assets/icons/horse.png'},
+    {'title': 'Тоок', 'icon': 'assets/icons/chicken.png'},
+  ];
 
   MenuScreen({super.key});
 
@@ -135,9 +116,9 @@ class MenuScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 30,
-                    mainAxisSpacing: 30,  
-                    childAspectRatio: 0.9,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 0.95,
                   ),
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
@@ -160,6 +141,7 @@ class MenuScreen extends StatelessWidget {
   Widget _buildMenuItem(BuildContext context, String title, String iconPath) {
     return GestureDetector(
       onTap: () {
+        // Navigate to the appropriate screen based on the title
         if (title == 'Биз жөнүндө') {
           Navigator.push(
             context,
@@ -171,34 +153,41 @@ class MenuScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => ToyutScreen()),
           );
         } else {
+          // For other categories, use the generic CategoryPage
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CategoryPage(title: title, iconPath: iconPath),
+              builder:
+                  (context) => CategoryPage(title: title, iconPath: iconPath),
             ),
           );
         }
       },
       child: Container(
-        width: 135,
-        height: 135,
         decoration: BoxDecoration(
-          color: Color(0xFF00A651),
+          color: Color(0xFF4CAF50),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 60,
-              height: 60,
-              margin: EdgeInsets.only(top: 12),
+              width: 70,
+              height: 70,
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Image.asset(
                 iconPath,
+                color: Color(0xFF4CAF50),
+                width: 54,
+                height: 54,
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
@@ -206,7 +195,7 @@ class MenuScreen extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 12,
+                  fontSize: 16,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -221,7 +210,7 @@ class MenuScreen extends StatelessWidget {
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      height: 60,
+      height: 80,
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Color(0xFF4CAF50),
@@ -239,18 +228,14 @@ class MenuScreen extends StatelessWidget {
             child: Icon(
               Icons.home_outlined,
               color: Color(0xFF4CAF50),
-              size: 32,
+              size: 26,
             ),
           ),
           GestureDetector(
             onTap: () {
               // Navigate to news or articles page
             },
-            child: Icon(
-              Icons.article_outlined,
-              color: Colors.white,
-              size: 32,
-            ),
+            child: Icon(Icons.article_outlined, color: Colors.white, size: 26),
           ),
           GestureDetector(
             onTap: () {
@@ -259,11 +244,7 @@ class MenuScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => ProfileScreen()),
               );
             },
-            child: Icon(
-              Icons.person_outline,
-              color: Colors.white,
-              size: 32,
-            ),
+            child: Icon(Icons.person_outline, color: Colors.white, size: 26),
           ),
         ],
       ),
