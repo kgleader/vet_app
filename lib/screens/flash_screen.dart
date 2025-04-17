@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:vet_app/screens/welcom_screen.dart';
+import 'package:vet_app/screens/login_screen.dart';
+import 'package:vet_app/screens/register_screen.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -48,6 +51,15 @@ class _FlashScreenState extends State<FlashScreen> {
                       fit: BoxFit.contain,
                     ),
                   ),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Color(0xFF4CAF50),
+                  child: Image.asset(
+                    'assets/cow_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               SizedBox(height: 30),
@@ -79,7 +91,7 @@ class _FlashScreenState extends State<FlashScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -102,6 +114,22 @@ class _FlashScreenState extends State<FlashScreen> {
               Spacer(),
               // Larger cow image at bottom
               Image.asset('assets/cow.png', height: 250, fit: BoxFit.contain),
+              Container(
+                width: 250,
+                height: 170,
+                decoration: BoxDecoration(
+                  color: Color(0xFF4CAF50),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/cow.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
             ],
           ),
         ),
