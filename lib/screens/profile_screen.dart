@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Профайл', 
+          'Профайл',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -57,7 +57,9 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage('assets/profile_placeholder.png'),
+                        backgroundImage: AssetImage(
+                          'assets/profile_placeholder.png',
+                        ),
                       ),
                       Container(
                         padding: EdgeInsets.all(4),
@@ -65,28 +67,18 @@ class ProfileScreen extends StatelessWidget {
                           color: Color(0xFF4CAF50),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 20,
-                        ),
+                        child: Icon(Icons.edit, color: Colors.white, size: 20),
                       ),
                     ],
                   ),
                   SizedBox(height: 16),
                   Text(
                     userData['name']!,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'ID: 00000',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ],
               ),
@@ -118,7 +110,9 @@ class ProfileScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ProfileEditScreen(userData: userData),
+                          builder:
+                              (context) =>
+                                  ProfileEditScreen(userData: userData),
                         ),
                       );
                     },
@@ -208,20 +202,13 @@ class ProfileScreen extends StatelessWidget {
             color: Color(0xFF4CAF50).withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(
-            icon,
-            color: Color(0xFF4CAF50),
-            size: 24,
-          ),
+          child: Icon(icon, color: Color(0xFF4CAF50), size: 24),
         ),
         SizedBox(width: 16),
         Expanded(
           child: Text(
             label,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
+            style: TextStyle(fontSize: 16, color: Colors.black87),
           ),
         ),
       ],
@@ -248,11 +235,7 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
-                icon,
-                color: Color(0xFF4CAF50),
-                size: 24,
-              ),
+              child: Icon(icon, color: Color(0xFF4CAF50), size: 24),
             ),
             SizedBox(width: 16),
             Expanded(
@@ -261,26 +244,16 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.grey,
-              size: 16,
-            ),
+            Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
           ],
         ),
       ),
@@ -298,16 +271,8 @@ class ProfileScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
-            Icons.home_outlined,
-            color: Colors.white,
-            size: 26,
-          ),
-          Icon(
-            Icons.article_outlined,
-            color: Colors.white,
-            size: 26,
-          ),
+          Icon(Icons.home_outlined, color: Colors.white, size: 26),
+          Icon(Icons.article_outlined, color: Colors.white, size: 26),
           Container(
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(

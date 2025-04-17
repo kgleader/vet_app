@@ -53,28 +53,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String phone = _phoneController.text.trim();
       // Remove any spaces or special characters
       phone = phone.replaceAll(RegExp(r'[^\d]'), '');
-      
+
       // Create a valid email using the phone number
       String email = "$phone@vetapp.example.com";
       String password = _passwordController.text;
-      
+
       print('Attempting to register user with email: $email');
 
       try {
         // Using regular Firebase Auth directly
         final auth = FirebaseAuth.instance;
         final firestore = FirebaseFirestore.instance;
-        
+
         // Use a basic try-catch for Firebase operations to isolate the error
         try {
           // Create the user account first
-          UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
+          UserCredential userCredential = await auth
+              .createUserWithEmailAndPassword(email: email, password: password);
+
+          print(
+            'User created successfully with ID: ${userCredential.user!.uid}',
           );
-          
-          print('User created successfully with ID: ${userCredential.user!.uid}');
-          
+
           // Update display name in a separate try block
           try {
             await userCredential.user!.updateDisplayName(_nameController.text);
@@ -83,20 +83,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
             print('Error updating display name: $e');
             // Continue anyway - not critical
           }
-          
+
           // Store in Firestore in a separate try block
           try {
-            await firestore.collection('users').doc(userCredential.user!.uid).set({
-              'name': _nameController.text,
-              'phone': phone,
-              'created_at': FieldValue.serverTimestamp(),
-            });
+            await firestore
+                .collection('users')
+                .doc(userCredential.user!.uid)
+                .set({
+                  'name': _nameController.text,
+                  'phone': phone,
+                  'created_at': FieldValue.serverTimestamp(),
+                });
             print('User data stored in Firestore');
           } catch (e) {
             print('Error storing user data in Firestore: $e');
             // Continue anyway - not critical
           }
-          
+
           // Navigate to menu screen
           Navigator.pushAndRemoveUntil(
             context,
@@ -112,7 +115,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         print('Error during Firebase Auth operation: $e');
         rethrow; // Re-throw to be caught by the outer try-catch
       }
-      
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException: ${e.code} - ${e.message}');
       String errorMessage;
@@ -151,10 +153,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       // Initialize Google Sign In
       final GoogleSignIn googleSignIn = GoogleSignIn();
-      
+
       // Start the interactive sign-in process
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      
+
       if (googleUser == null) {
         // User canceled the sign-in flow
         setState(() {
@@ -162,21 +164,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
         return;
       }
-      
+
       // Obtain auth details from the request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
       // Create a new credential for Firebase
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      
+
       // Sign in to Firebase with the Google credential
-      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-      
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+
       print('Google sign-in successful! User ID: ${userCredential.user!.uid}');
-      
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MenuScreen()),
@@ -194,16 +198,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("Катачылык"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text("Жабуу", style: TextStyle(color: Color(0xFF4CAF50))),
-          )
-        ],
-      ),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text("Катачылык"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(
+                  "Жабуу",
+                  style: TextStyle(color: Color(0xFF4CAF50)),
+                ),
+              ),
+            ],
+          ),
     );
   }
 
@@ -228,7 +236,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CircleAvatar(
                     radius: 20,
                     backgroundColor: Color(0xFF4CAF50),
-                    child: Image.asset('assets/cow_icon.png', width: 28, height: 28),
+                    child: Image.asset(
+                      'assets/cow_icon.png',
+                      width: 28,
+                      height: 28,
+                    ),
                   ),
                 ],
               ),
@@ -246,10 +258,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 30),
               Text(
                 'Толук аты жөнү',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               Container(
@@ -262,18 +271,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: 'Сиздин атыңыз',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    prefixIcon: Icon(Icons.person_outline, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.person_outline,
+                      color: Colors.grey[400],
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
               Text(
                 'Телефон номери',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               Container(
@@ -286,8 +298,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: '996628262929',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    prefixIcon: Icon(Icons.phone_outlined, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.phone_outlined,
+                      color: Colors.grey[400],
+                    ),
                   ),
                   keyboardType: TextInputType.phone,
                 ),
@@ -295,10 +313,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 20),
               Text(
                 'Сыр сөз',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               Container(
@@ -312,8 +327,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: '••••••••',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      color: Colors.grey[400],
+                    ),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -323,8 +344,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(right: 10),
                         child: Icon(
-                          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                          color: Colors.grey[400]
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.grey[400],
                         ),
                       ),
                     ),
@@ -334,10 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 10),
               Text(
                 'Сыр сөздү ырастоо',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               Container(
@@ -351,8 +371,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                     hintText: '••••••••',
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[400]),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      color: Colors.grey[400],
+                    ),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -362,8 +388,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(right: 10),
                         child: Icon(
-                          _obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                          color: Colors.grey[400]
+                          _obscureConfirmPassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.grey[400],
                         ),
                       ),
                     ),
@@ -380,44 +408,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     child: Text(
                       'Сыр сөздү унуттуңузбу?',
-                      style: TextStyle(
-                        color: Color(0xFF4CAF50),
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Color(0xFF4CAF50), fontSize: 14),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 30),
               _isLoading
-                  ? Center(child: CircularProgressIndicator(color: Color(0xFF4CAF50)))
+                  ? Center(
+                    child: CircularProgressIndicator(color: Color(0xFF4CAF50)),
+                  )
                   : ElevatedButton(
-                      onPressed: () {
-                        // Temporary solution to bypass the Firebase error
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => MenuScreen()),
-                          (route) => false,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF4CAF50),
-                        foregroundColor: Colors.white,
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                    onPressed: () {
+                      // Temporary solution to bypass the Firebase error
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MenuScreen()),
+                        (route) => false,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      child: Text(
-                        'Катталуу', 
-                        style: TextStyle(
-                          fontSize: 18, 
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                    ),
+                    child: Text(
+                      'Катталуу',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
+                  ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -447,23 +474,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: Divider(
-                      color: Colors.grey[350],
-                      thickness: 1,
-                    ),
+                    child: Divider(color: Colors.grey[350], thickness: 1),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      'Же', 
+                      'Же',
                       style: TextStyle(color: Colors.grey[500]),
                     ),
                   ),
                   Expanded(
-                    child: Divider(
-                      color: Colors.grey[350],
-                      thickness: 1,
-                    ),
+                    child: Divider(color: Colors.grey[350], thickness: 1),
                   ),
                 ],
               ),
@@ -473,7 +494,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () {
                     // Temporary solution to bypass Google sign-in error
                     Navigator.pushAndRemoveUntil(
-                      context, 
+                      context,
                       MaterialPageRoute(builder: (context) => MenuScreen()),
                       (route) => false,
                     );

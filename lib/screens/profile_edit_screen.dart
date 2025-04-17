@@ -22,7 +22,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     _nameController = TextEditingController(text: widget.userData['name']);
     _emailController = TextEditingController(text: widget.userData['email']);
     _phoneController = TextEditingController(text: widget.userData['phone']);
-    _locationController = TextEditingController(text: widget.userData['location']);
+    _locationController = TextEditingController(
+      text: widget.userData['location'],
+    );
   }
 
   @override
@@ -47,7 +49,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     try {
       // Simulate network call
       await Future.delayed(Duration(seconds: 1));
-      
+
       // Update userData map with new values
       Map<String, String> updatedUserData = {
         'name': _nameController.text,
@@ -55,10 +57,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         'phone': _phoneController.text,
         'location': _locationController.text,
       };
-      
+
       // Return to previous screen with updated data
       Navigator.pop(context, updatedUserData);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Профиль жаңыртылды"),
@@ -77,16 +79,20 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("Катачылык"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text("Жабуу", style: TextStyle(color: Color(0xFF4CAF50))),
-          )
-        ],
-      ),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text("Катачылык"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(
+                  "Жабуу",
+                  style: TextStyle(color: Color(0xFF4CAF50)),
+                ),
+              ),
+            ],
+          ),
     );
   }
 
@@ -102,7 +108,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Профилди өзгөртүү', 
+          'Профилди өзгөртүү',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20,
@@ -133,7 +139,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/profile_placeholder.png'),
+                    backgroundImage: AssetImage(
+                      'assets/profile_placeholder.png',
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -145,11 +153,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         color: Color(0xFF4CAF50),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 20,
-                      ),
+                      child: Icon(Icons.edit, color: Colors.white, size: 20),
                     ),
                   ),
                 ],
@@ -186,23 +190,23 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               _isLoading
                   ? CircularProgressIndicator(color: Color(0xFF4CAF50))
                   : ElevatedButton(
-                      onPressed: _saveChanges,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF4CAF50),
-                        foregroundColor: Colors.white,
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                      child: Text(
-                        'Сактоо',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    onPressed: _saveChanges,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
                       ),
                     ),
+                    child: Text(
+                      'Сактоо',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
             ],
           ),
         ),

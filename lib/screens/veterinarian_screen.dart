@@ -14,7 +14,7 @@ class _VeterinarianScreenState extends State<VeterinarianScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   bool _isLoading = true;
   List<Map<String, dynamic>> _veterinarians = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,7 @@ class _VeterinarianScreenState extends State<VeterinarianScreen> {
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
       final vets = await _firestoreService.getVeterinarians();
       setState(() {
@@ -52,77 +52,79 @@ class _VeterinarianScreenState extends State<VeterinarianScreen> {
         ),
         title: Text('Ветеринарлар', style: TextStyle(color: Colors.black)),
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : _veterinarians.isEmpty
+      body:
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : _veterinarians.isEmpty
               ? Center(child: Text('Ветеринарлар табылган жок'))
               : ListView.builder(
-                  padding: EdgeInsets.all(16),
-                  itemCount: _veterinarians.length,
-                  itemBuilder: (context, index) {
-                    final vet = _veterinarians[index];
-                    return Card(
-                      margin: EdgeInsets.only(bottom: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VetDetailScreen(vet: vet),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.grey[200],
-                                backgroundImage: vet['imageUrl'] != null
-                                    ? NetworkImage(vet['imageUrl'])
-                                    : null,
-                                child: vet['imageUrl'] == null
-                                    ? Icon(Icons.person, size: 40)
-                                    : null,
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      vet['name'] ?? 'Аты жок',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      vet['specialization'] ?? 'Адистиги көрсөтүлгөн эмес',
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      'Тажрыйбасы: ${vet['experience'] ?? 'Көрсөтүлгөн эмес'}',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Icon(Icons.arrow_forward_ios, color: Colors.grey),
-                            ],
+                padding: EdgeInsets.all(16),
+                itemCount: _veterinarians.length,
+                itemBuilder: (context, index) {
+                  final vet = _veterinarians[index];
+                  return Card(
+                    margin: EdgeInsets.only(bottom: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VetDetailScreen(vet: vet),
                           ),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundColor: Colors.grey[200],
+                              backgroundImage:
+                                  vet['imageUrl'] != null
+                                      ? NetworkImage(vet['imageUrl'])
+                                      : null,
+                              child:
+                                  vet['imageUrl'] == null
+                                      ? Icon(Icons.person, size: 40)
+                                      : null,
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    vet['name'] ?? 'Аты жок',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    vet['specialization'] ??
+                                        'Адистиги көрсөтүлгөн эмес',
+                                    style: TextStyle(color: Colors.grey[700]),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Тажрыйбасы: ${vet['experience'] ?? 'Көрсөтүлгөн эмес'}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
+              ),
     );
   }
 }
@@ -147,7 +149,7 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      
+
       if (image != null) {
         setState(() {
           _selectedImage = File(image.path);
@@ -160,9 +162,9 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
 
   Future<void> _sendMessage() async {
     if (_messageController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Билдирүү киргизиңиз')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Билдирүү киргизиңиз')));
       return;
     }
 
@@ -174,7 +176,7 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
       // For now, we'll just simulate sending the message
       // In a real app, you would upload the image to Firebase Storage
       // and save the message data to Firestore
-      
+
       final messageData = {
         'vetId': widget.vet['id'],
         'message': _messageController.text,
@@ -184,7 +186,7 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
       };
 
       final success = await _firestoreService.sendMessageToVet(messageData);
-      
+
       setState(() {
         _isSending = false;
       });
@@ -197,33 +199,34 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
           _rating = 5.0;
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Билдирүү жөнөтүү катасы')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Билдирүү жөнөтүү катасы')));
       }
     } catch (e) {
       setState(() {
         _isSending = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Билдирүү жөнөтүү катасы: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Билдирүү жөнөтүү катасы: $e')));
     }
   }
 
   void _showSuccessDialog() {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Ийгиликтүү!'),
-        content: Text('Рахмат, билдирүү кабыл алынды.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text('Жабуу'),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text('Ийгиликтүү!'),
+            content: Text('Рахмат, билдирүү кабыл алынды.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text('Жабуу'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -237,8 +240,10 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
           icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(widget.vet['name'] ?? 'Ветеринар', 
-                   style: TextStyle(color: Colors.black)),
+        title: Text(
+          widget.vet['name'] ?? 'Ветеринар',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -252,34 +257,30 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[200],
-                    backgroundImage: widget.vet['imageUrl'] != null
-                        ? NetworkImage(widget.vet['imageUrl'])
-                        : null,
-                    child: widget.vet['imageUrl'] == null
-                        ? Icon(Icons.person, size: 60)
-                        : null,
+                    backgroundImage:
+                        widget.vet['imageUrl'] != null
+                            ? NetworkImage(widget.vet['imageUrl'])
+                            : null,
+                    child:
+                        widget.vet['imageUrl'] == null
+                            ? Icon(Icons.person, size: 60)
+                            : null,
                   ),
                   SizedBox(height: 16),
                   Text(
                     widget.vet['name'] ?? 'Аты жок',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
                     widget.vet['specialization'] ?? 'Адистиги көрсөтүлгөн эмес',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 24),
-            
+
             // Details Section
             Container(
               padding: EdgeInsets.all(16),
@@ -329,14 +330,11 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
               ),
             ),
             SizedBox(height: 32),
-            
+
             // Message Form Section
             Text(
               'Ветеринарга билдирүү',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
             TextField(
@@ -365,53 +363,53 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
                 ),
                 SizedBox(width: 16),
                 Expanded(
-                  child: _selectedImage != null
-                      ? Stack(
-                          alignment: Alignment.topRight,
-                          children: [
-                            ClipRRect(
+                  child:
+                      _selectedImage != null
+                          ? Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.file(
+                                  _selectedImage!,
+                                  height: 100,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              IconButton(
+                                icon: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 12,
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _selectedImage = null;
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                          : Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.file(
-                                _selectedImage!,
-                                height: 100,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
                             ),
-                            IconButton(
-                              icon: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 12,
-                                child: Icon(Icons.close, size: 16, color: Colors.black),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _selectedImage = null;
-                                });
-                              },
-                            ),
-                          ],
-                        )
-                      : Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            child: Center(child: Text('Сүрөт тандалган жок')),
                           ),
-                          child: Center(
-                            child: Text('Сүрөт тандалган жок'),
-                          ),
-                        ),
                 ),
               ],
             ),
             SizedBox(height: 16),
             Text(
               'Баа',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             Slider(
               value: _rating,
@@ -438,9 +436,10 @@ class _VetDetailScreenState extends State<VetDetailScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: _isSending
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : Text('Жиберүү', style: TextStyle(fontSize: 16)),
+                child:
+                    _isSending
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text('Жиберүү', style: TextStyle(fontSize: 16)),
               ),
             ),
           ],

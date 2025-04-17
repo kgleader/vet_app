@@ -25,9 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
-      
+
       print('Bypassing Firebase login for testing');
-      
+
       // Navigate to menu screen
       Navigator.pushReplacement(
         context,
@@ -52,9 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       // Simulate loading
       await Future.delayed(Duration(seconds: 1));
-      
+
       print('Bypassing Google sign-in for testing');
-      
+
       // Navigate to menu screen
       Navigator.pushReplacement(
         context,
@@ -76,271 +76,251 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("Катачылык"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text("Жабуу"),
-          )
-        ],
-      ),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text("Катачылык"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text("Жабуу"),
+              ),
+            ],
+          ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Запрещаем закрытие экрана при нажатии кнопки назад
-        return false;
-      },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios, color: Colors.grey[500], size: 20),
-                      onPressed: () {
-                        // Вместо возврата назад, перенаправляем на FlashScreen
-                        Navigator.pushReplacementNamed(context, '/');
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
+                    onPressed: () => Navigator.pop(context),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                  ),
+                  Spacer(),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Color(0xFF4CAF50),
+                    child: Image.asset('assets/cow_icon.png', width: 35),
+                  ),
+                ],
+              ),
+              SizedBox(height: 25),
+              Center(
+                child: Text(
+                  'Өткөрүп жиберүү',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4CAF50),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              Text(
+                'Сиздин номериңиз',
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                    hintText: '996627826292',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
+                  ),
+                  keyboardType: TextInputType.phone,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Сыр сөз',
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    hintText: '••••••••',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      color: Colors.grey[400],
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
                       },
-                      padding: EdgeInsets.only(left: 5),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          'assets/cow_icon.png',
-                          width: 55.34,
-                          height: 55,
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Өткөрүп жиберүү',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFF4CAF50),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Text(
-                  'Сиздин номериңиз',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(
-                      hintText: '996627826292',
-                      hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
-                      prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
-                    ),
-                    keyboardType: TextInputType.phone,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Сыр сөз',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    decoration: InputDecoration(
-                      hintText: '••••••••',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 10.0),
-                        child: Icon(Icons.lock_outline, color: Colors.grey[400], size: 20),
-                      ),
-                      prefixIconConstraints: BoxConstraints(minWidth: 45, minHeight: 45),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15.0),
-                          child: Icon(
-                            _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, 
-                            color: Colors.grey[400],
-                            size: 20,
-                          ),
-                        ),
+                      child: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: Colors.grey[400],
                       ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size(0, 30),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen(),
+                      ),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size(0, 30),
+                  ),
+                  child: Text(
+                    'Сыр сөздү унуттуңузбу?',
+                    style: TextStyle(
+                      color: Color(0xFF4CAF50),
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              _isLoading
+                  ? Center(
+                    child: CircularProgressIndicator(color: Color(0xFF4CAF50)),
+                  )
+                  : ElevatedButton(
+                    onPressed: _signInWithEmailAndPassword,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4CAF50),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 15),
                     ),
                     child: Text(
-                      'Сыр сөздү унуттуңузбу?',
+                      'Кирүү',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(color: Colors.grey[350], thickness: 1),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Же',
+                      style: TextStyle(color: Colors.grey[500]),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(color: Colors.grey[350], thickness: 1),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
+              Center(
+                child: OutlinedButton(
+                  onPressed: _signInWithGoogle,
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    side: BorderSide(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/google_icon.png', height: 24),
+                      SizedBox(width: 10),
+                      Text('Google', style: TextStyle(color: Colors.black87)),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      'Аккаунтуңуз жокпу? Ушул ',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'жерден',
                       style: TextStyle(
                         color: Color(0xFF4CAF50),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                _isLoading
-                    ? Center(child: CircularProgressIndicator(color: Color(0xFF4CAF50)))
-                    : ElevatedButton(
-                        onPressed: _signInWithEmailAndPassword,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF4CAF50),
-                          foregroundColor: Colors.white,
-                          minimumSize: Size(double.infinity, 52),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          elevation: 0,
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                        ),
-                        child: Text(
-                          'Кирүү', 
-                          style: TextStyle(
-                            fontSize: 18, 
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Аккаунтуңуз жокпу? ',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                    ),
-                    Text(
-                      'Ушул ',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RegisterScreen()),
-                        );
-                      },
-                      child: Text(
-                        'жерден',
-                        style: TextStyle(
-                          color: Color(0xFF4CAF50),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      ' каттaлыңыз',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: Color(0xFF4CAF50),
-                        thickness: 0.5,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'Же', 
-                        style: TextStyle(color: Color(0xFF4CAF50)),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: Color(0xFF4CAF50),
-                        thickness: 0.5,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Center(
-                  child: OutlinedButton(
-                    onPressed: _signInWithGoogle,
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                      side: BorderSide(color: Colors.grey[300]!, width: 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      backgroundColor: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/google_icon.png', height: 24),
-                      ],
+                  Flexible(
+                    child: Text(
+                      ' катталыңыз',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 30),
+              Center(
+                child: Text(
+                  '© МаралАкгүл.Баардык укуктар корголгон',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                 ),
-                SizedBox(height: 70),
-                Center(
-                  child: Text(
-                    '© МаралАкгүл.Баардык укуктар корголгон',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -33,7 +33,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     try {
       // Simulate network call
       await Future.delayed(Duration(seconds: 1));
-      
+
       // For demo purposes, navigate back to login screen
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -41,7 +41,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           backgroundColor: Color(0xFF4CAF50),
         ),
       );
-      
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -59,16 +59,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("Катачылык"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text("Жабуу", style: TextStyle(color: Color(0xFF4CAF50))),
-          )
-        ],
-      ),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text("Катачылык"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(
+                  "Жабуу",
+                  style: TextStyle(color: Color(0xFF4CAF50)),
+                ),
+              ),
+            ],
+          ),
     );
   }
 
@@ -86,7 +90,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF4CAF50),
+                      ),
                       onPressed: () => Navigator.pop(context),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints(),
@@ -95,7 +102,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Color(0xFF4CAF50),
-                      child: Image.asset('assets/cow_icon.png', width: 30, height: 30),
+                      child: Image.asset(
+                        'assets/cow_icon.png',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -114,7 +125,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 SizedBox(height: 40),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    border: Border.all(
+                      color: Color(0xFF4CAF50).withOpacity(0.5),
+                    ),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
@@ -123,7 +136,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                       hintText: 'Жаңы сыр сөз',
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureNewPassword
@@ -143,7 +159,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    border: Border.all(
+                      color: Color(0xFF4CAF50).withOpacity(0.5),
+                    ),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
@@ -152,7 +170,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                       hintText: 'Сыр сөздү тастыктаңыз',
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureConfirmPassword
@@ -171,25 +192,29 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 SizedBox(height: 40),
                 _isLoading
-                    ? Center(child: CircularProgressIndicator(color: Color(0xFF4CAF50)))
+                    ? Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF4CAF50),
+                      ),
+                    )
                     : ElevatedButton(
-                        onPressed: _changePassword,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF4CAF50),
-                          minimumSize: Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        child: Text(
-                          'Сыр сөздү өзгөртүү',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      onPressed: _changePassword,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF4CAF50),
+                        minimumSize: Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
                       ),
+                      child: Text(
+                        'Сыр сөздү өзгөртүү',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
               ],
             ),
           ),

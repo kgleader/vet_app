@@ -43,7 +43,7 @@ class ToyutScreen extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                image: AssetImage('assets/icons/chotor.png'),
+                image: AssetImage('assets/grass.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -72,19 +72,19 @@ class ToyutScreen extends StatelessWidget {
             items: [
               {
                 'title': 'Көк тоют',
-                'image': 'assets/icons/grass.svg',
+                'image': 'assets/icons/grass.png',
                 'description':
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
               },
               {
                 'title': 'Дан тоют',
-                'image': 'assets/icons/wheat.svg',
+                'image': 'assets/icons/wheat.png',
                 'description':
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
               },
               {
                 'title': 'Аралаш тоют',
-                'image': 'assets/icons/mixed_feed.svg',
+                'image': 'assets/icons/mixed_feed.png',
                 'description':
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
               },
@@ -138,7 +138,7 @@ class ToyutScreen extends StatelessWidget {
             item['image']!,
             width: 24,
             height: 24,
-            color: Color(0xFF4CAF50),
+            colorFilter: ColorFilter.mode(Color(0xFF4CAF50), BlendMode.srcIn),
           ),
         ),
         title: Text(
@@ -200,9 +200,9 @@ class ToyutScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-  color: Color(0xFF4CAF50).withOpacity(0.1),
-    borderRadius: BorderRadius.circular(8),
-),
+        border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

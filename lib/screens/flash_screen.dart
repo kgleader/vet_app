@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vet_app/screens/welcom_screen.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -8,10 +9,16 @@ class FlashScreen extends StatefulWidget {
 }
 
 class _FlashScreenState extends State<FlashScreen> {
-  @override  
+  @override
   void initState() {
     super.initState();
-    // Удалено автоматическое перенаправление по таймеру
+    // Navigate to welcome screen after 2 seconds
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+      );
+    });
   }
 
   @override
@@ -25,19 +32,26 @@ class _FlashScreenState extends State<FlashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              // Изменяем выравнивание логотипа
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 30),
-                  child: Image.asset(
-                    'assets/cow_icon.png',
-                    width: 55.34,
-                    height: 55,
+              // Centered logo at top
+              Center(
+                child: Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFF4CAF50),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Image.asset(
+                      'assets/cow_icon.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 30),
+              // Text
               Text(
                 'Кош келдиңиз!',
                 style: TextStyle(
@@ -60,9 +74,13 @@ class _FlashScreenState extends State<FlashScreen> {
                 ),
               ),
               SizedBox(height: 20),
+              // Button
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF4CAF50),
@@ -82,26 +100,8 @@ class _FlashScreenState extends State<FlashScreen> {
                 ),
               ),
               Spacer(),
-              SizedBox(
-                width: double.infinity, // Полная ширина экрана
-                height: 200, // Меньшая высота контейнера
-                child: Stack(
-                  clipBehavior: Clip.none, // Разрешаем выход за пределы Stack
-                  children: [
-                    Positioned(
-                      bottom: -30, // Немного сдвигаем вниз
-                      left: -51, // Сдвигаем влево как на макете
-                      child: Image.asset(
-                        'assets/main_icon.png',
-                        width: 462,
-                        height: 431,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
+              // Larger cow image at bottom
+              Image.asset('assets/cow.png', height: 250, fit: BoxFit.contain),
             ],
           ),
         ),

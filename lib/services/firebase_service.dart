@@ -11,7 +11,7 @@ class FirebaseService {
     try {
       await Firebase.initializeApp();
       print('Firebase initialized successfully');
-      
+
       // Print current user if logged in
       final currentUser = _auth.currentUser;
       if (currentUser != null) {
@@ -25,10 +25,13 @@ class FirebaseService {
   }
 
   // Email/Password Sign Up
-  static Future<UserCredential> signUpWithEmailPassword(String email, String password) async {
+  static Future<UserCredential> signUpWithEmailPassword(
+    String email,
+    String password,
+  ) async {
     try {
       print('Starting Firebase registration with email: $email');
-      
+
       // Check if email is valid
       if (!email.contains('@')) {
         print('Invalid email format: $email');
@@ -37,13 +40,11 @@ class FirebaseService {
           message: 'The email address is badly formatted.',
         );
       }
-      
+
       // Create the user with email and password
-      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      
+      final UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
       print('User created successfully with uid: ${userCredential.user?.uid}');
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -59,7 +60,10 @@ class FirebaseService {
   }
 
   // Email/Password Sign In
-  static Future<UserCredential?> signInWithEmailPassword(String email, String password) async {
+  static Future<UserCredential?> signInWithEmailPassword(
+    String email,
+    String password,
+  ) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -77,15 +81,16 @@ class FirebaseService {
     try {
       // Interactive sign in process
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      
+
       // User canceled the sign-in flow
       if (googleUser == null) {
         return null;
       }
 
       // Obtain auth details from request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
       // Create a new credential for Firebase
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -93,7 +98,9 @@ class FirebaseService {
       );
 
       // Once signed in, return the UserCredential
-      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final UserCredential userCredential = await _auth.signInWithCredential(
+        credential,
+      );
       return userCredential;
     } catch (e) {
       print('Error signing in with Google: $e');
@@ -110,7 +117,7 @@ class FirebaseService {
         await _googleSignIn.signOut();
         print('Google sign out successful');
       }
-      
+
       // Sign out from Firebase
       await _auth.signOut();
       print('User signed out successfully.');
@@ -127,9 +134,9 @@ class FirebaseService {
 
   // Update User Profile
   static Future<bool> updateUserProfile({
-    required String userId, 
-    required String displayName, 
-    required String phoneNumber
+    required String userId,
+    required String displayName,
+    required String phoneNumber,
   }) async {
     try {
       // Store additional user data in Firestore

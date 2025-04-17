@@ -25,14 +25,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     try {
       // Simulate network call
       await Future.delayed(Duration(seconds: 1));
-      
+
       // For demo purposes, we'll just navigate to the verification screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ForgotPasswordVerificationScreen(
-            phoneNumber: _phoneController.text,
-          ),
+          builder:
+              (context) => ForgotPasswordVerificationScreen(
+                phoneNumber: _phoneController.text,
+              ),
         ),
       );
     } catch (e) {
@@ -47,16 +48,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("Катачылык"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text("Жабуу", style: TextStyle(color: Color(0xFF4CAF50))),
-          )
-        ],
-      ),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text("Катачылык"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(
+                  "Жабуу",
+                  style: TextStyle(color: Color(0xFF4CAF50)),
+                ),
+              ),
+            ],
+          ),
     );
   }
 
@@ -74,7 +79,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios, color: Color(0xFF4CAF50)),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Color(0xFF4CAF50),
+                      ),
                       onPressed: () => Navigator.pop(context),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints(),
@@ -83,7 +91,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Color(0xFF4CAF50),
-                      child: Image.asset('assets/cow_icon.png', width: 30, height: 30),
+                      child: Image.asset(
+                        'assets/cow_icon.png',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -102,16 +114,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 SizedBox(height: 24),
                 Text(
                   'Сиздин түпнуска катталган телефон номериңизге сыр сөздү калыбына келтирүү кодун жөнөтөбүз.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4CAF50).withOpacity(0.5)),
+                    border: Border.all(
+                      color: Color(0xFF4CAF50).withOpacity(0.5),
+                    ),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
@@ -119,32 +130,39 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     decoration: InputDecoration(
                       hintText: '996XXXXXXXXX',
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
                     ),
                     keyboardType: TextInputType.phone,
                   ),
                 ),
                 SizedBox(height: 24),
                 _isLoading
-                    ? Center(child: CircularProgressIndicator(color: Color(0xFF4CAF50)))
+                    ? Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF4CAF50),
+                      ),
+                    )
                     : ElevatedButton(
-                        onPressed: _sendResetCode,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF4CAF50),
-                          minimumSize: Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        child: Text(
-                          'Жөнөтүү',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      onPressed: _sendResetCode,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF4CAF50),
+                        minimumSize: Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
                       ),
+                      child: Text(
+                        'Жөнөтүү',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.center,
@@ -152,10 +170,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       'Артка кайтуу',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     ),
                   ),
                 ),
