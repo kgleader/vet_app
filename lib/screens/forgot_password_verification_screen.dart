@@ -40,7 +40,7 @@ class _ForgotPasswordVerificationScreenState
     String code = _controllers.map((c) => c.text).join();
 
     if (code.length != 6) {
-      _showErrorDialog("Толук кодdу киргизиңиз");
+      _showErrorDialog("Толук кодду киргизиңиз");
       return;
     }
 
@@ -58,7 +58,7 @@ class _ForgotPasswordVerificationScreenState
         MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
       );
     } catch (e) {
-      _showErrorDialog("Коду текшерүү учурунда катачылык");
+      _showErrorDialog("Кодду текшерүү учурунда катачылык");
     } finally {
       setState(() {
         _isLoading = false;
