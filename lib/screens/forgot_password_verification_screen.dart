@@ -40,7 +40,7 @@ class _ForgotPasswordVerificationScreenState
     String code = _controllers.map((c) => c.text).join();
 
     if (code.length != 6) {
-      _showErrorDialog("Толук коду киргизиңиз");
+      _showErrorDialog("Толук кодdу киргизиңиз");
       return;
     }
 
