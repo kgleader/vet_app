@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: _phoneController,
                   decoration: InputDecoration(
-                    hintText: '996627826292',
+                    hintText: '996770707070',
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 15),
                     prefixIcon: Icon(Icons.phone, color: Colors.grey[400]),
