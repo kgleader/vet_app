@@ -147,7 +147,7 @@ class _ForgotPasswordVerificationScreenState
                   children: List.generate(
                     6,
                     (index) => SizedBox(
-                      width: 40,
+                      width: 50,
                       child: TextField(
                         controller: _controllers[index],
                         focusNode: _focusNodes[index],
