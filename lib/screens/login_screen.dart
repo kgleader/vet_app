@@ -317,7 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: Text(
                   '© МаралАкгүл.Баардык укуктар корголгон',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                  style: TextStyle(fontSize: 15, color: Colors.grey[500]),
                 ),
               ),
             ],
