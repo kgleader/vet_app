@@ -313,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 100),
               Center(
                 child: Text(
                   '© МаралАкгүл.Баардык укуктар корголгон',
