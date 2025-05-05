@@ -282,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Flexible(
                     child: Text(
                       'Аккаунтуңуз жокпу? Ушул ',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
