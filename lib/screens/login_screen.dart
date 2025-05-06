@@ -202,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     minimumSize: Size(0, 30),
                   ),
                   child: Text(
-                    'Сыр сөздү унутсанызч',
+                    'Сыр сөздү унуттунузбу?',
                     style: TextStyle(
                       color: Color(0xFF4CAF50),
                       fontWeight: FontWeight.normal,
